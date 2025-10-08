@@ -465,8 +465,8 @@ def get_adsense_service(account_key: str):
     
     if not credentials:
         flow = InstalledAppFlow.from_client_secrets_file(client_secrets, scopes)
-        # IMPORTANT: Set access_type=offline to get refresh token, use port 8081 to avoid conflicts
-        flow.run_local_server(port=8081, access_type='offline', prompt='consent')
+        # IMPORTANT: Set access_type=offline to get refresh token, use port 8080 to avoid conflicts
+        flow.run_local_server(port=8080, access_type='offline', prompt='consent')
         credentials = flow.credentials
         with open(credentials_file, 'w') as f:
             credentials_json = credentials.to_json()
@@ -523,7 +523,7 @@ def validate_client_secrets_json(content: str) -> dict:
                     "auth_uri": client_data["auth_uri"],
                     "token_uri": client_data["token_uri"],
                     "redirect_uris": [
-                        "http://localhost:8081/",
+                        "http://localhost:8080/",
                         "urn:ietf:wg:oauth:2.0:oob"
                     ]
                 }
@@ -792,7 +792,7 @@ async def upload_client_secrets(
       "installed": {
         "client_id": "...",
         "client_secret": "...",
-        "redirect_uris": ["http://localhost:8081/", "urn:ietf:wg:oauth:2.0:oob"]
+        "redirect_uris": ["http://localhost:8080/", "urn:ietf:wg:oauth:2.0:oob"]
       }
     }
     
@@ -934,7 +934,7 @@ async def connect_account(
         def run_oauth():
             try:
                 # Use specific port to avoid conflicts
-                flow.run_local_server(port=8081, access_type='offline', prompt='consent')
+                flow.run_local_server(port=8080, access_type='offline', prompt='consent')
                 credentials = flow.credentials
                 
                 # Save credentials
